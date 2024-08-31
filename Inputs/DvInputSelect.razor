@@ -1,0 +1,25 @@
+﻿@using System.Linq.Expressions
+@inherits InputBase<string>
+
+<InputGroup ValidationFor="Validation" LabelText="@LabelText">
+    <select class="@CssClass" type="text" @bind="@CurrentValue">
+        <option disabled>Select @LabelText</option>
+        @foreach (string option in Options)
+        {
+            <option value="@option">@option</option>
+        }
+    </select>
+</InputGroup>
+
+@code {
+    [Parameter] public string LabelText { get; set; }
+    [Parameter] public List<string> Options { get; set; }
+    [Parameter] public Expression<Func<string>> Validation { get; set; }
+
+    protected override bool TryParseValueFromString(string value, out string result, out string validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = null;
+        return true;
+    }
+}
